@@ -1,33 +1,51 @@
-from typing import Callable, Dict
+import os
+import tarfile
+from typing import Callable, Dict, Optional
 
+import numpy as np
 import pandas as pd
+from genericpath import exists
+from pandas.io.parsers import read_table
 
 from .eval import BaseEval
 
 
-class TMUPEval(BaseEval):
+class STSBEval(BaseEval):
 
-    COL_LABEL = "label"
-    LABEL_PARA = 1
-    COL_SENT_A = "sentence_A_ja"
-    COL_SENT_B = "sentence_B_ja"
+    URL = "http://ixa2.si.ehu.es/stswiki/images/4/48/Stsbenchmark.tar.gz"
+    FILENAME = os.path.join("stsbenchmark", "sts-dev.csv")
+    COL_SCORE = "score"
+    SCORE_THRESH = 4.0
+    COL_SENT_A = "sentence1"
+    COL_SENT_B = "sentence2"
+    COLUMNS = ["genre", "filename", "year", "id", "score", "sentence1", "sentence2"]
 
     def __init__(
         self,
-        encode_fn: Callable,
-        path = None,
+        encode_fn: Callable[[str], np.ndarray],
+        path: Optional[str] = None,
     ) -> None:
         if path is None:
-            df = pd.read_table(self.URL)
+            self.path_dev = os.path.join(self._get_cache_path(), self.FILENAME)
+            self.path_targz = str(self._get_cache_path()) + ".tar.gz"
+            if not os.path.exists(self.path_dev):
+                self._download(self.URL, path=self.path_targz)
+                with tarfile.open(self.path_targz, "r:*") as tar:
+                    tar.extractall(str(self._get_cache_path()))
+            df = pd.read_csv(
+                self.path_dev,
+                header=None,
+                encoding="utf=8",
+                sep="\t",
+                names=self.COLUMNS,
+            )
         else:
-            df = pd.read_table(path)
-        print("df", df.shape)
-        print("df", df.columns)
-        print("df", df.tail(2))
-        index_para = df[df[self.COL_LABEL] == self.LABEL_PARA].index
+            df = pd.read_table(path, header=None, encoding="utf=8", sep="\t")
+        index_para = df[df.loc[:, self.COL_SCORE] > self.SCORE_THRESH].index
         texts_a = df.loc[index_para, self.COL_SENT_A].to_list()
-        texts_a = [text.replace(" ", '') for text in texts_a]
         texts_b = df.loc[index_para, self.COL_SENT_B].to_list()
-        texts_b = [text.replace(" ", '') for text in texts_b]
-        texts_total = df[self.COL_SENT_A].tolist() + df[self.COL_SENT_B].tolist()
+        texts_total = (
+            df.loc[:, self.COL_SENT_A].tolist() + df.loc[:, self.COL_SENT_B].tolist()
+        )
+        # print('len=',len(texts_total))
         super().__init__(encode_fn, texts_a, texts_b, texts_total)

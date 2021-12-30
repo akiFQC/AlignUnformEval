@@ -1,11 +1,12 @@
 import numpy as np
 from encode import hash_encode
+from pandas.core.algorithms import isin
 
-from alignunformeval import TMUPEval
+from alignunformeval import STSBEval
 
 
-def test_tumpeval():
-    evaluator = TMUPEval(hash_encode)
+def test_stsb_eval():
+    evaluator = STSBEval(hash_encode)
     result = evaluator.eval_summary()
     assert isinstance(result, dict)
     assert "alignment" in result
