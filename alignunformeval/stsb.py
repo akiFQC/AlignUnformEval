@@ -1,5 +1,5 @@
 from typing import Callable, Dict
-import numpy as np
+
 import pandas as pd
 
 from .eval import BaseEval
@@ -7,7 +7,6 @@ from .eval import BaseEval
 
 class TMUPEval(BaseEval):
 
-    URL = "https://raw.githubusercontent.com/tmu-nlp/paraphrase-corpus/master/tmup.tsv"
     COL_LABEL = "label"
     LABEL_PARA = 1
     COL_SENT_A = "sentence_A_ja"
@@ -15,7 +14,7 @@ class TMUPEval(BaseEval):
 
     def __init__(
         self,
-        encode_fn: Callable[[str], np.ndarray],
+        encode_fn: Callable,
         path = None,
     ) -> None:
         if path is None:

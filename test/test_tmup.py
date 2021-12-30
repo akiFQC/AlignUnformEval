@@ -4,7 +4,7 @@ import numpy as np
 
 
 def hash_encode(text: str):
-    hashed = hash(text)
+    hashed = hash(text)/
     out = []
     dim = 36
     for i in range(1, dim+1):

@@ -6,13 +6,13 @@ import pandas as pd
 from scipy.spatial.distance import pdist
 
 
-def eval_alignment(encode_fn: Callable, texts_a: list[str], texts_b: list[str]):
+def eval_alignment(encode_fn: Callable[[str], np.ndarray], texts_a: list[str], texts_b: list[str]):
     vec_a = np.array([list(encode_fn(text)) for text in texts_a])
     vec_b = np.array([list(encode_fn(text)) for text in texts_b])
     return np.mean(np.linalg.norm(np.abs(vec_a - vec_b), axis=1, ord=2))
 
 
-def eval_uniform(encode_fn: Callable, texts_a: list[str]):
+def eval_uniform(encode_fn: Callable[[str], np.ndarray], texts_a: list[str]):
     vec = np.array([list(encode_fn(text)) for text in texts_a])
     dists = pdist(vec, "euclidean")
     return np.log(np.mean(np.exp(-2 * dists)))
@@ -21,7 +21,7 @@ def eval_uniform(encode_fn: Callable, texts_a: list[str]):
 class BaseEval(object):
     def __init__(
         self,
-        encode_fn: Callable,
+        encode_fn: Callable[[str], np.ndarray],
         texts_a: list[str],
         texts_b: list[str],
         texts_total: list[str],
