@@ -15,7 +15,7 @@ the embeddings are uniformly distributed:
 ## Install
 by pip
 ```
-pip install AlignUniformEval
+pip install alignuniformeval
 ``` 
 
 by source
