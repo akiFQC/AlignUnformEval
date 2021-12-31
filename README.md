@@ -1,4 +1,7 @@
 # AlignUnformEval
+[![PyPI version](https://badge.fury.io/py/alignunformeval.svg)](https://badge.fury.io/py/alignunformeval)
+[![pytest](https://github.com/akiFQC/AlignUnformEval/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/akiFQC/AlignUnformEval/actions/workflows/ci.yaml)
+
 This is a python tool to evaluate alignment and uniformity of sentence embedding like [SimCSE paper](https://arxiv.org/pdf/2104.08821.pdf).   
 
 [SimCSE paper](https://arxiv.org/pdf/2104.08821.pdf) explains alignment and uniformity as below:
