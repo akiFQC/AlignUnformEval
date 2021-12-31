@@ -30,4 +30,4 @@ def test_align_insame():
 
 def test_uniform():
     unifo = eval.eval_uniform(encoder, texts_a=TEXTS)
-    print("uniform = {0}".format(unifo))
+    print("uniformity = {0}".format(unifo))

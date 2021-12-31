@@ -61,7 +61,7 @@ class BaseEval(object):
         return eval_uniform(self.encode_fn, self.text_total)
 
     def eval_summary(self) -> Dict[str, float]:
-        return {"alignment": self.eval_alignment(), "uniform": self.eval_uniform()}
+        return {"alignment": self.eval_alignment(), "uniformity": self.eval_uniform()}
 
     def _get_cache_path(self):
         return os.path.abspath(

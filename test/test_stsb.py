@@ -10,7 +10,7 @@ def test_stsb_eval():
     result = evaluator.eval_summary()
     assert isinstance(result, dict)
     assert "alignment" in result
-    assert "uniform" in result
+    assert "uniformity" in result
     assert isinstance(result["alignment"], float)
-    assert isinstance(result["uniform"], float)
+    assert isinstance(result["uniformity"], float)
     print(f"result={result}")
