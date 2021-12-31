@@ -7,12 +7,14 @@ This is a python tool to evaluate alignment and uniformity of sentence embedding
 [SimCSE paper](https://arxiv.org/pdf/2104.08821.pdf) explains alignment and uniformity as below:
 >  Given a distribution of positive
 pairs p_pos, alignment calculates expected distance between embeddings of the paired instances (assuming representations are already normalized): 
-<img src="https://latex.codecogs.com/gif.latex?\ell_{\rm align}:=\mathbb{E}_{(x, x^{+})\sim p_{\rm pos}}\left[\| f(x)-f(x^{+}) \|^{2} \right]" />
 
+<img src="https://latex.codecogs.com/gif.latex?\ell_{\rm align}:=\mathbb{E}_{(x, x^{+})\sim p_{\rm pos}}\left[\| f(x)-f(x^{+}) \|^{2} \right]" />
 
 > On the other hand, uniformity measures how well
 the embeddings are uniformly distributed:
+
 <img src="https://latex.codecogs.com/gif.latex?\ell_{\rm uniformity}:=\log \mathbb{E}_{(x, y) \overset{i.i.d.}{\sim}  p_{\rm data}} \left[e ^{ -2\| f(x)-f(x^{+}) \|^{2}}\right]" />
+
 > where p_data denotes the data distribution. 
 
 ## Install
